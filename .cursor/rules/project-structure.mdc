@@ -1,0 +1,86 @@
+---
+description: Project structure and file organization guidelines for both frontend and backend. Reference this rule when organizing code or understanding the project architecture.
+globs: "**/*.{ts,tsx,js,jsx,py}"
+alwaysApply: false
+---
+# Project Structure
+
+## Frontend Structure (Next.js)
+
+The frontend follows a modern Next.js 13+ structure with App Router:
+
+```tree
+frontend/
+├── app/                # Next.js App Router
+│   ├── (app)/         # Main application pages
+│   ├── api/           # API Routes
+│   ├── (landing)/     # Marketing/landing pages
+│   └── layout.tsx     # Root layout
+├── components/        # React components
+│   ├── ui/           # Shadcn UI components
+│   └── ...          # Other components
+├── hooks/            # Custom React hooks
+├── lib/             # Utility libraries and configurations
+├── public/          # Static assets
+├── styles/          # Global styles and Tailwind config
+└── utils/           # Utility functions
+```
+
+### Frontend Guidelines
+
+- Use kebab case for route directories (e.g., `api/hello-world/route`)
+- Use PascalCase for components (e.g. `components/Button.tsx`)
+- Shadcn components are in `components/ui`
+- All other components are in `components/`
+- Colocate files in the folder where they're used unless they can be used across the app
+- If a component can be used in many places, place it in the `components` folder
+- Pages are Server components for direct data loading
+- Use `swr` for data fetching in deeply nested components
+- Components with `onClick` must be client components with `use client` directive
+
+## Backend Structure (FastAPI)
+
+The backend follows a modular FastAPI structure:
+
+```tree
+backend/
+├── app/              # Main application directory
+│   ├── constants/    # Constant values and configurations
+│   ├── filters/      # Custom filters for data processing
+│   ├── models/       # Database models
+│   ├── templates/    # Email templates using MJML
+│   ├── utils/        # Utility functions and helpers
+│   ├── routers/      # FastAPI routers
+│   ├── schemas/      # Pydantic models for request/response
+│   ├── services/     # Business logic and operations
+│   ├── domain/       # Core domain logic
+│   ├── errors/       # Custom exception classes
+│   └── clients/      # External service clients
+├── scripts/          # Python scripts for data processing
+├── tests/            # Unit and integration tests
+└── alembic/          # Database migrations
+```
+
+### Backend Guidelines
+
+- Follow FastAPI best practices for route organization
+- Use SQLAlchemy ORM for database models
+- Implement proper error handling with custom exceptions
+- Use Pydantic for request/response validation
+- Follow dependency injection patterns
+- Use structured logging with `structlog`
+- Keep business logic in services layer
+- Use domain-driven design principles
+- Implement proper database migrations with Alembic
+
+## Common Guidelines
+
+- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`)
+- Implement proper error handling and validation
+- Follow security best practices
+- Write clear and concise documentation
+- Use consistent code formatting
+- Implement proper testing at all levels
+- Follow the principle of least privilege
+- Keep sensitive information in environment variables
+- Use proper logging for debugging and monitoring

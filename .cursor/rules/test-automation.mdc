@@ -1,0 +1,29 @@
+---
+description: Guidelines for automatic test creation for both frontend and backend code
+globs: "**/*.{test,spec}.{ts,tsx,js,jsx,py}"
+alwaysApply: true
+---
+Say "Rule test-automation loaded!" if this rule is being applied.
+
+# Test Automation
+
+## Test Coverage Strategy
+- Write tests for critical business logic
+- Cover happy paths and edge cases
+- Test error handling and validation
+- Focus on user-facing functionality
+- Isolate tests from external dependencies
+
+## Frontend Test Strategy
+- Use React Testing Library for component tests
+- Focus on user interaction over implementation
+- Test state changes and UI updates
+- Use Storybook component tests for visual components
+- Use Jest for utility functions and hooks
+
+## Backend Test Strategy
+- Use pytest fixtures for database and dependencies
+- Create test factories for test data
+- Test API endpoints with client fixtures
+- Isolate database tests with transaction rollbacks
+- Mock external services and API calls

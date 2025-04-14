@@ -1,0 +1,48 @@
+---
+description: State management approaches and patterns
+globs: "frontend/**/*.{ts,tsx}"
+alwaysApply: true
+---
+# State Management
+
+## Local State
+- Use useState for simple component state
+- Use useReducer for complex state logic
+- Extract reusable state logic to custom hooks
+- Keep state as close as possible to where it's used
+- Avoid prop drilling with context
+
+## Context API
+- Use context for truly global state
+- Create focused contexts for specific domains
+- Provide default values for better testing
+- Optimize with memoization
+- Implement proper error handling
+
+```tsx
+// Context pattern
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  
+  // Context value
+  const value = useMemo(() => ({
+    user,
+    login: async () => { /* implementation */ },
+    logout: () => { /* implementation */ },
+  }), [user])
+  
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+```
+
+## Query State
+- Use React Query for server state
+- Implement proper loading/error states
+- Configure appropriate caching
+- Use optimistic updates for mutations 

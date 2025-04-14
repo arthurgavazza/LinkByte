@@ -1,0 +1,81 @@
+---
+description: How to add or edit Cursor rules in our project
+globs: "**/*.mdc"
+alwaysApply: true
+---
+# Cursor Rules Standards
+
+## Rule Structure
+- Keep rules concise (15-25 lines of content)
+- Focus on a single topic or technology
+- Use short bullet points instead of paragraphs
+- Include minimal code examples (5-10 lines)
+
+## File Organization
+- All rule files must be placed in `.cursor/rules/` directory
+- Use prefixed kebab-case for filenames:
+  - `core-`: Project-wide standards
+  - `fe-`: Frontend guidelines
+  - `be-`: Backend guidelines
+  - `test-`: Testing practices
+  - `tool-`: Tool-specific guidelines
+
+## Frontmatter Format
+```yaml
+---
+description: Brief, focused description (1 line)
+globs: "path/pattern/**/*.{ext}" # Relevant files
+alwaysApply: boolean # Whether to apply without attachment
+---
+```
+
+## Content Guidelines
+- Start with H1 title (`# Title`)
+- Use H2 for sections (2-3 sections per rule)
+- Include 3-5 key bullet points per section
+- Add a small code example only if essential
+- Remove duplicated information across rules
+
+## Example Rule Format
+```markdown
+---
+description: JWT authentication best practices
+globs: "backend/**/*.py"
+---
+# JWT Authentication
+
+## Token Generation
+- Use strong, random secret keys
+- Set appropriate expiration times
+- Include minimal payload data
+- Utilize proper signing algorithms
+
+## Token Validation
+- Validate all token claims
+- Implement proper error handling
+- Check expiration before processing
+```
+
+## Rule Categories
+
+### Frontend Rules
+- `nextjs-typescript.mdc`: Next.js and TypeScript standards
+- `form-handling.mdc`: Form handling patterns
+- `api-best-practices.mdc`: API integration guidelines
+
+### Backend Rules
+- `postgres-database.mdc`: Database best practices
+- `url-shortener-backend.mdc`: Backend implementation guidelines
+- `auth-cookie-rules.mdc`: Authentication standards
+
+### Project Rules
+- `project-structure.mdc`: Project organization
+- `quality-standards.mdc`: Code quality guidelines
+- `orval-integration.mdc`: Orval API integration
+
+## Maintenance Guidelines
+1. Keep rules focused and specific
+2. Update rules when project standards change
+3. Remove outdated rules
+4. Ensure rules don't conflict with each other
+5. Use clear, actionable guidelines

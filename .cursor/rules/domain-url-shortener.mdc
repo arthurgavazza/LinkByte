@@ -1,0 +1,44 @@
+---
+description: Domain-specific patterns for URL shortener application
+globs: "**/*link*/**/*.{ts,tsx,py}"
+alwaysApply: true
+---
+# URL Shortener Patterns
+
+## Link Creation
+- Validate input URLs for security and format
+- Generate short codes with collision detection
+- Support custom aliases with validation
+- Implement rate limiting to prevent abuse
+- Add metadata (creation date, expiration, etc)
+
+```python
+async def create_short_url(
+    original_url: str, 
+    custom_alias: Optional[str] = None
+) -> Link:
+    # Validate URL format and security
+    validate_url(original_url)
+    
+    # Generate or validate short code
+    short_code = custom_alias or generate_unique_code()
+    if custom_alias and await alias_exists(custom_alias):
+        raise HTTPException(409, "Alias already exists")
+        
+    # Create and return link
+    return await Link.create(original_url=original_url, short_code=short_code)
+```
+
+## Link Resolution
+- Implement efficient lookup by short code
+- Handle expired and inactive links
+- Track analytics on redirect
+- Return appropriate HTTP status codes
+- Validate input parameters
+
+## Analytics
+- Track click count, unique visitors, and referrers
+- Implement time-based analytics views
+- Create geographic visualizations
+- Support data export functionality
+- Provide comparative analysis tools 

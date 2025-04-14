@@ -1,0 +1,48 @@
+---
+description: Component design and implementation patterns
+globs: "frontend/**/*.{ts,tsx}"
+alwaysApply: true
+---
+Say "Rule fe-component-patterns loaded!" if this rule is being applied.
+
+# Component Patterns
+
+## Component Structure
+- Use functional components with hooks
+- Export named components (not default exports)
+- Keep components focused on a single responsibility
+- Extract complex logic to custom hooks
+- Use proper TypeScript typing for props
+
+```tsx
+// Preferred pattern
+interface ButtonProps {
+  variant?: 'primary' | 'secondary'
+  children: React.ReactNode
+  onClick?: () => void
+  disabled?: boolean
+}
+
+export function Button({ 
+  variant = 'primary',
+  children,
+  onClick,
+  disabled = false,
+}: ButtonProps) {
+  return (
+    <button 
+      className={`btn-${variant}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  )
+}
+```
+
+## Component Organization
+- Place UI primitives in `components/ui`
+- Use compound components for complex UI
+- Apply composition over inheritance
+- Keep presentation separate from logic 

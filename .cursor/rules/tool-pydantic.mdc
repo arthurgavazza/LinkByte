@@ -1,0 +1,35 @@
+---
+description: Best practices for using Pydantic for data validation and serialization
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# Pydantic Validation
+
+## Model Definition
+- Use proper field types with annotations
+- Add default values for optional fields
+- Implement field validation with `Field`
+- Use descriptive field names and aliases
+- Structure models to match API contracts
+
+```python
+from pydantic import BaseModel, Field, EmailStr
+
+class UserCreate(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50)
+    email: EmailStr
+    password: str = Field(..., min_length=8)
+```
+
+## Validation Techniques
+- Use `validator` decorators for field-level validation
+- Implement `root_validator` for cross-field validation
+- Create custom validators for complex logic
+- Handle validation errors gracefully
+- Use `Config` class for model configuration
+
+## Model Conversion
+- Use `.model_dump()` for converting to dictionaries
+- Implement `.from_orm()` for ORM objects
+- Use model inheritance for similar schemas
+- Apply transformations with `computed_field` 

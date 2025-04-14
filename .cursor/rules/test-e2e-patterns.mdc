@@ -1,0 +1,43 @@
+---
+description: End-to-end testing guidelines with Playwright
+globs: "tests/e2e/**/*.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+# E2E Testing Guidelines
+
+## Test Structure
+- Group tests by feature or user flow
+- Use descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Focus on user-centric scenarios
+- Test critical paths first
+
+```typescript
+// Playwright test example
+test('user can create a short link', async ({ page }) => {
+  // Arrange - Setup
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Login' }).click();
+  await page.getByLabel('Username').fill('testuser');
+  await page.getByLabel('Password').fill('password123');
+  await page.getByRole('button', { name: 'Login' }).click();
+  
+  // Act - Perform the operation
+  await page.getByRole('link', { name: 'Create Link' }).click();
+  await page.getByLabel('URL').fill('https://example.com');
+  await page.getByRole('button', { name: 'Shorten' }).click();
+  
+  // Assert - Verify the results
+  await expect(page.getByText('Link created successfully')).toBeVisible();
+  const shortLink = page.getByTestId('short-link');
+  await expect(shortLink).toBeVisible();
+})
+```
+
+## Best Practices
+- Use data-testid attributes sparingly
+- Prefer role, label, and text selectors
+- Implement proper waiting strategies
+- Test across different viewports
+- Use isolated test data
+- Clean up after tests 

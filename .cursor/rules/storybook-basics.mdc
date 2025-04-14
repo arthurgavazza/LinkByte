@@ -1,0 +1,37 @@
+---
+description: Core Storybook setup and component story patterns
+globs: "**/*.stories.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+Say "Rule storybook-basics loaded!" if this rule is being applied.
+
+# Storybook Basics
+
+## Story Structure
+- Use the default export for component metadata
+- Define story variants as named exports
+- Include default args in the base story
+- Use composition for complex scenarios
+- Group related components under the same category
+
+## Component Testing
+- Use the `play` function to simulate user interactions
+- Import testing utilities from `@storybook/test` (userEvent, within, expect, fn)
+- Use `within(canvasElement)` to query the DOM
+- Group related interactions with the `step` function
+- Use the `mount` function for code that runs before rendering
+
+## Provider Integration
+- Add context providers in story decorators
+- For auth testing, follow the `test-storybook-auth` pattern
+- Create test-specific providers to avoid API dependencies
+- Configure provider state through story parameters
+- Test different provider states (loading, error, success)
+
+## Next.js Integration
+- Use `@storybook/nextjs` or `@storybook/experimental-nextjs-vite` framework
+- Enable App Router with `nextjs.appDirectory: true` in parameters
+- Configure navigation context via `nextjs.navigation` parameters
+- Add providers (AuthProvider, QueryClientProvider) as needed
+- Avoid custom mocks for Next.js features when possible
+

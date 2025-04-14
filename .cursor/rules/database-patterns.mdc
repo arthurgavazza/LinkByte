@@ -1,0 +1,48 @@
+---
+description: Database model design and query optimization patterns
+globs: "backend/**/*.{py,sql}"
+alwaysApply: true
+---
+# Database Patterns
+
+## Model Design
+- Use plural table names (`users` not `user`)
+- Include created_at and updated_at timestamps
+- Use proper data types (UUID for IDs when appropriate)
+- Add appropriate indexes for common queries
+
+```python
+class Link(Base):
+    __tablename__ = "links"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    short_code = Column(String(20), unique=True, index=True)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+```
+
+## Query Optimization
+- Use SQLAlchemy 2.0 style queries
+- Implement connection pooling
+- Use proper pagination techniques
+- Add appropriate indexes
+
+```python
+# Efficient query with explicit join
+async def get_user_links(user_id: UUID) -> list[Link]:
+    query = (
+        select(Link)
+        .where(Link.user_id == user_id)
+        .order_by(Link.created_at.desc())
+        .options(selectinload(Link.tags))
+    )
+    result = await db.execute(query)
+    return result.scalars().all()
+```
+
+## Common Patterns
+- Use migrations for schema changes
+- Implement proper error handling
+- Use transaction for related operations
+- Validate data before insertion 

@@ -1,0 +1,39 @@
+---
+description: Core best practices for Next.js and TypeScript development
+globs: "frontend/app/**/*.{ts,tsx}"
+alwaysApply: true
+---
+# Next.js & TypeScript Best Practices
+
+## App Router Structure
+- Use the `/app` directory for new pages and components
+- Implement nested routing with folders
+- Place shared UI in `/components` directory
+- Use `page.tsx` for route-specific components
+- Create `layout.tsx` for shared page layouts
+
+```tsx
+// app/dashboard/page.tsx
+export default function DashboardPage() {
+  return (
+    <div className="container">
+      <h1>Dashboard</h1>
+      <DashboardStats />
+    </div>
+  );
+}
+```
+
+## Data Fetching
+- Use React Server Components for server-side logic
+- Implement proper error boundaries
+- Create server actions for form submissions
+- Avoid mixing client and server code
+- Set proper caching and revalidation intervals
+
+## TypeScript Integration
+- Define proper interface types for API responses
+- Use `React.FC<Props>` for typed components
+- Avoid `any` type - use `unknown` when necessary
+- Leverage union types for state management
+- Create shared type definitions for common patterns 

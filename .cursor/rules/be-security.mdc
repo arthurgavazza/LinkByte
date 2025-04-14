@@ -1,0 +1,40 @@
+---
+description: Security best practices for Python backend applications
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# Backend Security Practices
+
+## Authentication
+- Use bcrypt for password hashing
+- Implement proper JWT validation
+- Set secure, HTTP-only cookies
+- Apply proper token expiration
+- Validate all auth inputs thoroughly
+
+```python
+# Password handling with bcrypt
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+```
+
+## API Security
+- Validate all user inputs
+- Implement rate limiting
+- Use parameterized queries (not string concatenation)
+- Apply principle of least privilege
+- Add proper CORS configuration
+
+## Data Protection
+- Never log sensitive information
+- Apply TLS for all external connections
+- Use environment variables for secrets
+- Sanitize data before rendering
+- Implement proper error messages (no stack traces) 

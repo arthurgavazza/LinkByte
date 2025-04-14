@@ -1,0 +1,59 @@
+---
+description: Form handling with React Hook Form and API integration patterns
+globs: "frontend/**/*.{ts,tsx}"
+alwaysApply: true
+---
+# Form and API Integration
+
+## Form Structure
+- Use React Hook Form with Zod validation
+- Define schemas that match API DTOs
+- Handle submission states (loading, error, success)
+- Display field-level validation errors
+
+```typescript
+// Form schema matching API DTO
+const schema = z.object({
+  email: z.string().email(),
+  name: z.string().min(2),
+})
+
+// Form component with API integration
+function ExampleForm() {
+  const form = useForm({
+    resolver: zodResolver(schema),
+  })
+  const mutation = useCreateEntity()
+  
+  const onSubmit = handleSubmit((data) => {
+    mutation.mutate(data)
+  })
+}
+```
+
+## API Integration
+- Use Orval-generated hooks for API calls
+- Include withCredentials for auth cookies
+- Implement error handling with toast notifications
+- Use React Query's cache management
+
+```typescript
+// API client setup
+const api = axios.create({
+  baseURL: '/api',
+  withCredentials: true,
+})
+
+// Mutation with cache invalidation
+const { mutate } = useCreateEntity({
+  onSuccess: () => {
+    queryClient.invalidateQueries(['entities'])
+    toast.success('Created successfully')
+  },
+})
+```
+
+## Common Patterns
+- Reset form after successful submission
+- Show loading state during submission
+- Implement proper error handling 

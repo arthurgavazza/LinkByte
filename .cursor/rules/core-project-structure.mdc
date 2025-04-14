@@ -1,0 +1,29 @@
+---
+description: Project structure and file organization guidelines for both frontend and backend
+globs: "**/*"
+alwaysApply: true
+---
+# Project Structure
+
+## Frontend Organization
+- Use feature-based organization for complex features
+- Place shared components in `components/ui`
+- Keep page components in `app/` directory
+- Use consistent naming:
+  - Components: PascalCase
+  - Utilities: camelCase
+  - Constants: UPPER_CASE
+
+## Backend Organization
+- Place API routes in `routers/` directory
+- Keep business logic in `services/` 
+- Use `models/` for database models
+- Place validation schemas in `schemas/`
+- Keep utilities in `utils/`
+
+## Naming Conventions
+- Use kebab-case for files (component-name.tsx)
+- Use PascalCase for component exports
+- Suffix test files with `.test.ts`
+- Suffix stories with `.stories.tsx`
+- Be descriptive and consistent 

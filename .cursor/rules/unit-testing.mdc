@@ -1,0 +1,68 @@
+---
+description: Unit testing best practices for components and utilities
+globs: "**/*.{test,spec}.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+Say "Rule unit-testing loaded!" if this rule is being applied.
+
+# Unit Testing Basics
+
+## React Component Tests
+- Test behavior, not implementation
+- Use React Testing Library queries by priority:
+  1. Accessible roles (getByRole)
+  2. Text content (getByText)
+  3. Form labels (getByLabelText)
+  4. Test IDs as last resort (getByTestId)
+- Test user interactions and resulting UI changes
+
+## Storybook Component Testing
+- Group interactions using `step` function for better organization
+- Use `fn()` for creating mock functions from `@storybook/test`
+- Use `mount()` function for pre-render setup when needed
+- Prefer accessing elements by role and label over test IDs
+- Organize tests from simple to complex scenarios
+
+```typescript
+// Example Storybook test with best practices
+export const FormSubmission: Story = {
+  args: {
+    onSubmit: fn(), // Use fn() from @storybook/test
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    
+    await step('Enter form data', async () => {
+      await userEvent.type(canvas.getByLabelText(/email/i), 'test@example.com');
+      await userEvent.type(canvas.getByLabelText(/password/i), 'Password123');
+    });
+    
+    await step('Submit the form', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: /submit/i }));
+    });
+    
+    // Assert on mock function being called
+    await expect(args.onSubmit).toHaveBeenCalled();
+  },
+};
+```
+
+## Async Testing Best Practices
+- Use waitFor for async operations
+- Test loading, success, and error states
+- Clean up timers and mocks after tests
+
+```typescript
+test('submits form with valid data', async () => {
+  render(<MyForm />)
+  await userEvent.type(screen.getByLabelText('Email'), 'test@example.com')
+  await userEvent.click(screen.getByRole('button', { name: /submit/i }))
+  expect(screen.getByText(/success/i)).toBeInTheDocument()
+})
+```
+
+## Utility Tests
+- Test edge cases and error scenarios
+- Create small, focused test cases
+- Use descriptive test names
+- Group related tests with describe blocks 

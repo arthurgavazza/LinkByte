@@ -1,0 +1,5 @@
+{
+	"devDependencies": {
+		"@storybook/nextjs": "^8.6.12"
+	}
+}

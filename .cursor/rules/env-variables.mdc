@@ -1,0 +1,40 @@
+---
+description: Best practices for managing environment variables in Python using python-dotenv and Pydantic
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# Environment Variables
+
+## Configuration Setup
+- Use python-dotenv for loading variables
+- Define environment-specific files (.env.dev, .env.prod)
+- Keep sensitive values out of version control
+- Use defaults for non-critical variables
+- Document required variables
+
+```python
+# settings.py
+from pydantic import BaseSettings, PostgresDsn
+
+class Settings(BaseSettings):
+    DATABASE_URL: PostgresDsn
+    API_KEY: str
+    DEBUG: bool = False
+    
+    class Config:
+        env_file = ".env"
+        case_sensitive = True
+```
+
+## Usage Patterns
+- Create a singleton settings instance
+- Access settings via dependency injection
+- Validate configuration at startup
+- Use different configs for testing
+- Load environment variables early in application startup
+
+## Security Considerations
+- Never commit .env files to version control
+- Rotate secrets regularly
+- Use different values for different environments
+- Implement proper error handling for missing variables

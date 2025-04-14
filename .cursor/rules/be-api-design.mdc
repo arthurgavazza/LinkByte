@@ -1,0 +1,44 @@
+---
+description: API endpoint design principles
+globs: "backend/app/routers/**/*.py"
+alwaysApply: true
+---
+# API Design Principles
+
+## Endpoint Structure
+- Follow RESTful resource naming conventions
+- Use plural nouns for collections
+- Group related endpoints in same router
+- Implement proper HTTP methods
+- Return appropriate status codes
+
+```python
+# Router pattern
+router = APIRouter(
+    prefix="/api/links",
+    tags=["links"],
+)
+
+@router.get("/", response_model=List[LinkResponse])
+async def get_links(
+    user: User = Depends(get_current_user),
+    skip: int = 0,
+    limit: int = 100,
+    search: Optional[str] = None,
+):
+    """Get all links for current user."""
+    return await link_service.get_links(user.id, skip, limit, search)
+```
+
+## Request/Response
+- Use Pydantic models for validation
+- Document all endpoints with docstrings
+- Implement consistent error responses
+- Use proper pagination patterns
+- Validate all inputs with appropriate constraints
+
+## Security
+- Implement authentication via dependencies
+- Add proper rate limiting
+- Use appropriate caching headers
+- Validate all user inputs 

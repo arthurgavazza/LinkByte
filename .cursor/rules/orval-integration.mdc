@@ -1,0 +1,82 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Orval API integration guidelines with HTTP-only cookie auth
+globs: "frontend/**/*.{ts,tsx}"
+alwaysApply: true
+---
+# Orval API Integration Guidelines
+
+## Configuration
+- Include withCredentials option in Orval configuration
+- Set up proper error handling in generated API clients
+- Configure Orval to use a custom axios instance
+
+```javascript
+// Example Orval configuration
+module.exports = {
+  api: {
+    output: {
+      mode: 'tags-split',
+      target: './src/api/generated',
+      schemas: './src/api/models',
+      client: 'react-query',
+      override: {
+        mutator: {
+          path: './src/api/mutator/custom-instance.ts',
+          name: 'customInstance',
+        },
+        query: {
+          useQuery: true,
+          useInfinite: true,
+        },
+      },
+    },
+    input: {
+      target: './api-spec.json',
+    },
+  },
+};
+```
+
+## Custom Axios Instance
+- Create a custom instance with withCredentials set to true
+- Implement request/response interceptors for authentication
+- Handle 401 errors with automatic refresh token flow
+
+```javascript
+// Example custom instance
+import axios from 'axios';
+
+export const customInstance = axios.create({
+  baseURL: '/api',
+  withCredentials: true,
+});
+
+// Add response interceptor for auth errors
+customInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    // Handle 401 errors with token refresh
+    if (error.response?.status === 401) {
+      // Refresh token and retry
+    }
+    return Promise.reject(error);
+  }
+);
+```
+
+## Using Generated Hooks
+- Import and use generated hooks directly in components
+- Handle loading, error, and success states properly
+- Implement proper caching strategies
+- Include proper error handling with user feedback
+
+## Best Practices
+- Keep API queries and mutations in custom hooks
+- Centralize authentication-related logic
+- Use React Query's invalidation for cache management
+- Implement proper loading and error UI states

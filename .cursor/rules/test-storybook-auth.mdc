@@ -1,0 +1,30 @@
+# Storybook Authentication
+
+## Mock Provider Setup
+- Create specialized auth provider for Storybook testing
+- Match interface with real auth provider
+- Export `useAuth` hook with identical signature
+- Support authenticated, unauthenticated, and loading states
+
+```tsx
+// Simple mock provider example
+export function StoryAuthProvider({ children, user, isAuthenticated }) {
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, login: async () => {} }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+```
+
+## Story Configuration
+- Create separate variants for different auth states
+- Use story parameters to control auth state
+- Add auth provider decorator to each story
+- Test conditional UI rendering based on auth state
+
+## Testing Best Practices
+- Verify username displays correctly when authenticated
+- Test protected navigation elements appear/disappear
+- Use play function to test interactions
+- Create Storybook-specific component versions when needed 

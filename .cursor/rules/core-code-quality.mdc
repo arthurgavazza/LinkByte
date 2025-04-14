@@ -1,0 +1,28 @@
+---
+description: Code quality standards and best practices
+globs: "**/*.{ts,tsx,js,jsx,py}"
+alwaysApply: true
+---
+# Code Quality Standards
+
+## TypeScript Standards
+- Use proper typing for all variables and functions
+- Avoid any and unknown types
+- Prefer interfaces for object shapes
+- Use const assertions for literal types
+- Enable strict mode in tsconfig
+
+## Python Standards
+- Follow PEP 8 style guide
+- Use type hints for all functions
+- Use descriptive variable names
+- Implement proper error handling
+- Prefer list comprehensions over loops
+
+## Clean Code Principles
+- Write small, focused functions (<20 lines)
+- Use meaningful variable/function names
+- Minimize function parameters (≤3)
+- Delete commented-out code
+- Add comments only when necessary
+- Avoid deep nesting (≤3 levels) 

@@ -1,0 +1,37 @@
+---
+description: Best practices for SQLAlchemy ORM and Alembic database migrations
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# SQLAlchemy & Alembic
+
+## Model Definition
+- Use a Base class for all models
+- Define relationships explicitly (`relationship`)
+- Add appropriate indexes and constraints
+- Include created_at/updated_at timestamps
+- Use appropriate column types
+
+```python
+class User(Base):
+    __tablename__ = "users"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    email = Column(String, unique=True, index=True, nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+```
+
+## Query Patterns
+- Use SQLAlchemy 2.0 style (`select`)
+- Implement joins explicitly
+- Use appropriate loading strategies
+- Apply filtering at the database level
+- Implement pagination for large results
+
+## Migration Management
+- Create migrations for all schema changes
+- Review auto-generated migrations
+- Use appropriate naming for migration files
+- Test migrations before applying
+- Implement proper rollback procedures 

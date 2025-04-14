@@ -1,0 +1,47 @@
+---
+description: Mocking patterns for tests and Storybook
+globs: "**/*.{test,spec,stories}.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+# Test Mocking Patterns
+
+## API Mocking
+- Mock at module level with jest.mock
+- Return consistent object structures matching real implementation
+- Include loading/error states in mocks
+- Mock ALL exports from a module
+
+```typescript
+jest.mock('@/lib/api/generated/module', () => ({
+  useQueryHook: () => ({
+    data: mockData,
+    isLoading: false,
+    error: null,
+  }),
+  useMutationHook: () => ({
+    mutateAsync: jest.fn().mockResolvedValue({}),
+    isLoading: false,
+  }),
+}))
+```
+
+## Context Providers
+- Create simplified mock providers
+- Provide minimal implementation for context methods
+- Mock only what the component uses
+
+```typescript
+const MockProvider = ({ children }) => (
+  <Context.Provider value={{
+    state: { /* minimal state */ },
+    action: jest.fn(),
+  }}>
+    {children}
+  </Context.Provider>
+)
+```
+
+## Common Issues
+- Missing mock for indirect dependencies
+- Incomplete mock object structure
+- Forgetting to mock async methods 

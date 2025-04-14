@@ -1,0 +1,55 @@
+---
+description: Index of all cursor rules with their purposes and relationships
+globs: "**/*"
+alwaysApply: true
+---
+# Rule Index
+
+## Core Rules
+- `core-project-structure.mdc` - Project organization and file layout
+- `core-code-quality.mdc` - Code quality standards and best practices
+- `core-workflow.mdc` - Development process and best practices
+
+## Frontend Rules
+- `fe-component-patterns.mdc` - Component design and implementation patterns
+- `fe-state-management.mdc` - State management approaches and patterns
+- `fe-nextjs.mdc` - Next.js and TypeScript best practices
+- `form-api-patterns.mdc` - Form handling with React Hook Form and API integration
+
+## Backend Rules
+- `be-api-design.mdc` - API endpoint design principles
+- `be-error-handling.mdc` - Error handling and logging best practices
+- `be-security.mdc` - Security best practices for Python applications
+- `database-patterns.mdc` - Database model design and query optimization
+- `auth-security.mdc` - Authentication and security best practices
+
+## Testing Rules
+- `test-automation.mdc` - Guidelines for creating proper tests
+- `unit-testing.mdc` - Unit testing best practices 
+- `storybook-basics.mdc` - Storybook setup, component stories, and Next.js integration
+- `test-mocking.mdc` - Mocking patterns for tests and Storybook
+- `test-e2e-patterns.mdc` - End-to-end testing guidelines
+
+## Tool-Specific Rules
+- `tool-fastapi.mdc` - FastAPI development best practices
+- `tool-pydantic.mdc` - Pydantic validation patterns
+- `tool-sqlalchemy.mdc` - SQLAlchemy ORM and Alembic migrations
+- `env-variables.mdc` - Environment variables management
+- `http-logging.mdc` - HTTP clients and structured logging
+
+## Domain-Specific Rules
+- `domain-url-shortener.mdc` - URL shortener application patterns
+
+## Governance
+- `cursor-rules.mdc` - How to create and maintain cursor rules
+
+## How to Use Rules
+1. Find the relevant topic in this index
+2. Reference the specific rule file
+3. Apply the focused guidelines from that rule
+
+## Rule Standards
+- Keep rules concise (15-25 lines of content)
+- Focus on 3-5 key principles per section
+- Use bullet points instead of paragraphs
+- Include only essential code examples 

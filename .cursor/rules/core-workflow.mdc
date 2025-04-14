@@ -1,0 +1,35 @@
+---
+description: Development workflow guidelines and Cursor AI usage patterns
+globs: "**/*"
+alwaysApply: true
+---
+# Development Workflow
+
+## Feature Implementation
+- Define clear requirements before starting
+- Create structure/skeleton before details
+- Implement tests alongside functionality
+- Run quality checks before submission
+- Add proper documentation
+
+## Cursor AI Patterns
+- Provide context about existing architecture
+- Specify desired patterns and constraints
+- Include file references for consistency
+- Ask for test implementation with features
+- Break complex tasks into smaller chunks
+
+```
+Create a React component for [purpose] that:
+- Accepts these props: [list]
+- Manages these states: [list]
+- Follows project patterns from [file]
+- Includes tests for [scenarios]
+```
+
+## Code Review
+- Verify requirements implementation
+- Check test coverage and quality
+- Ensure consistent code style
+- Look for security issues
+- Validate error handling 

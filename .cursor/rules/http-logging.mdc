@@ -1,0 +1,51 @@
+---
+description: Best practices for HTTP clients (HTTPX) and structured logging with structlog
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# HTTP Clients & Logging
+
+## HTTPX Usage
+- Use async client for asynchronous applications
+- Implement proper timeout handling
+- Add retries for transient failures
+- Use connection pooling for performance
+- Log request/response details appropriately
+
+```python
+from httpx import AsyncClient, Timeout
+
+async def fetch_data(url):
+    timeout = Timeout(10.0, connect=5.0)
+    async with AsyncClient(timeout=timeout) as client:
+        response = await client.get(url)
+        response.raise_for_status()
+        return response.json()
+```
+
+## Structured Logging
+- Use structlog for consistent log format
+- Include request IDs in all logs
+- Log appropriate levels (DEBUG, INFO, ERROR)
+- Avoid logging sensitive information
+- Add context for better debugging
+
+```python
+import structlog
+
+logger = structlog.get_logger()
+
+def process_item(item, request_id):
+    logger.info(
+        "Processing item", 
+        item_id=item.id, 
+        request_id=request_id
+    )
+    # Processing logic here
+```
+
+## Error Handling
+- Handle common HTTP errors (timeouts, 4xx, 5xx)
+- Implement circuit breakers for failing services
+- Log failed requests with full context
+- Use appropriate retry strategies 

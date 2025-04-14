@@ -1,0 +1,27 @@
+---
+description: Best practices for FastAPI development and deployment with Uvicorn
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# FastAPI Best Practices
+
+## Endpoint Design
+- Use function annotations for request/response validation
+- Implement dependency injection with `Depends`
+- Use path operations decorators (`@app.get`, `@app.post`)
+- Document endpoints with docstrings and OpenAPI descriptions
+- Return appropriate status codes and response models
+
+## Dependency Injection
+- Create reusable dependencies for common operations
+- Use `Depends` for authentication, database access
+- Implement proper error handling in dependencies
+- Chain dependencies for complex requirements
+- Test dependencies independently
+
+## Performance
+- Use async endpoints for IO-bound operations
+- Implement proper request validation
+- Use background tasks for long-running operations
+- Configure proper Uvicorn settings (workers, reload)
+- Add appropriate caching headers 

@@ -1,0 +1,44 @@
+---
+description: Error handling and logging best practices
+globs: "backend/**/*.py"
+alwaysApply: true
+---
+# Error Handling & Logging
+
+## Error Types
+- Use HTTPException for API-level errors
+- Create custom exception classes for domain errors
+- Use status codes consistently
+- Include appropriate error details
+
+```python
+# Custom exception example
+class ResourceNotFoundError(Exception):
+    """Raised when a resource is not found."""
+    def __init__(self, resource_type: str, resource_id: str):
+        self.resource_type = resource_type
+        self.resource_id = resource_id
+        self.message = f"{resource_type} with id {resource_id} not found"
+        super().__init__(self.message)
+        
+# Exception handler
+@app.exception_handler(ResourceNotFoundError)
+async def resource_not_found_handler(request: Request, exc: ResourceNotFoundError):
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"detail": exc.message},
+    )
+```
+
+## Logging Practices
+- Use structured logging with context
+- Include request IDs in logs
+- Log appropriate levels (DEBUG, INFO, WARNING, ERROR)
+- Don't log sensitive information
+- Include stack traces for errors
+
+## Error Prevention
+- Validate inputs before processing
+- Use type hints and runtime validation
+- Implement proper database constraints
+- Add appropriate timeouts for external services 

@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    /* Card, popover, etc. */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary: Trustworthy blue */
+    --primary: 210 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary: Teal for growth and stability */
+    --secondary: 174 75% 37%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent: Warm amber for energy and calls to action */
+    --accent: 35 100% 50%;
+    --accent-foreground: 222 47% 11%;
+
+    /* Muted, border, etc. */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+
+    /* Destructive and ring */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 210 100% 50%;
+
+    /* Border radius */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Base colors */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    /* Card, popover, etc. */
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 14%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary: Adjusted blue for dark mode */
+    --primary: 210 100% 60%;
+    --primary-foreground: 222 47% 11%;
+
+    /* Secondary: Adjusted teal for dark mode */
+    --secondary: 174 75% 42%;
+    --secondary-foreground: 222 47% 11%;
+
+    /* Accent: Adjusted amber for dark mode */
+    --accent: 35 100% 55%;
+    --accent-foreground: 222 47% 11%;
+
+    /* Muted, border, etc. */
+    --muted: 223 47% 20%;
+    --muted-foreground: 215 20% 65%;
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    /* Destructive and ring */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 210 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom gradient backgrounds */
+.hero-gradient {
+  @apply bg-gradient-to-br from-primary/90 via-primary/70 to-secondary/60 text-primary-foreground;
+}
+
+.card-gradient-hover {
+  @apply transition-all duration-300 hover:bg-gradient-to-br hover:from-primary/10 hover:to-transparent;
+}
+
+/* Button hover effects */
+.btn-primary-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/20;
+}
+
+.btn-secondary-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-secondary/20;
+}
+
+.btn-accent-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent/20;
+}
+
+/* Chart colors */
+.chart-primary {
+  color: hsl(var(--primary));
+}
+
+.chart-secondary {
+  color: hsl(var(--secondary));
+}
+
+.chart-accent {
+  color: hsl(var(--accent));
+}
+
+/* Progress bars */
+.progress-bar-bg {
+  @apply bg-muted;
+}
+
+.progress-bar-fill {
+  @apply rounded-full bg-primary transition-all duration-500;
+}
