@@ -12,7 +12,6 @@ from app.services.analytics_service import AnalyticsService
 from app.middlewares.auth import require_auth
 
 router = APIRouter(
-    prefix="/api/links",
     tags=["links"],
 )
 
@@ -28,6 +27,7 @@ async def create_link(
 ):
     """Create a new shortened link."""
     # Get authenticated user ID (optional)
+    print("Creating link")
     try:
         user_id = require_auth(request)
     except HTTPException:
