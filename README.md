@@ -1,4 +1,4 @@
-# Leveraging MDC Files to Improve Development Workflow in Cursor
+# Leveraging .mdc rules Files to Improve Development Workflow in Cursor
 
 ## About This Guide
 
@@ -16,21 +16,11 @@ LinkByte is an experimental URL shortener application built with Next.js and Fas
 
 The frontend was initially generated using Vercel's V0 AI tool, which provided a basic foundation. I then used Cursor and a set of custom rules to develop and refine specific features, particularly JWT authentication with HTTP-only cookies and link creation functionality. These features were chosen as they provided good test cases for rule enforcement across both frontend and backend components, requiring proper form handling, API integration, and security considerations.
 
-## What Are MDC Files?
+## What Are .mdc rules files?
 
-MDC (Markdown Configuration) files are special documentation files used by Cursor AI to understand codebases and guide development. These files contain project-specific rules, patterns, and best practices that help the AI provide more contextual and relevant code suggestions and modifications.
+.mdc rules files are special documentation files used by Cursor AI to understand codebases and guide development. These files contain project-specific rules, patterns, and best practices that help the AI provide more contextual and relevant code suggestions and modifications.
 
-When working with Cursor AI, these MDC files act as a knowledge base that shapes how the AI responds to your requests. They enable the AI to understand your project's architecture, coding standards, and patterns without having to analyze the entire codebase repeatedly.
-
-## How MDC Files Enhance Development Workflow
-
-MDC files significantly improve development workflow in Cursor by:
-
-1. **Providing consistent patterns**: Ensure all team members follow the same code structure and patterns.
-2. **Accelerating onboarding**: Help new developers understand project conventions quickly.
-3. **Reducing cognitive load**: Document complex patterns so developers don't need to remember everything.
-4. **Guiding AI assistance**: Enable Cursor AI to provide more relevant and accurate code suggestions.
-5. **Enforcing best practices**: Codify project-specific standards and best practices.
+When working with Cursor AI, these files act as a knowledge base that shapes how the AI responds to your requests. They enable the AI to understand your project's architecture, coding standards, and patterns without having to analyze the entire codebase repeatedly.
 
 ## How Cursor Rules Work
 
