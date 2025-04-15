@@ -7,7 +7,7 @@
  */
 
 export type GetLinkReferrersApiAnalyticsLinksLinkIdReferrersGetParams = {
-  start_date?: string | null
-  end_date?: string | null
-  limit?: number
-}
+start_date?: string | null;
+end_date?: string | null;
+limit?: number;
+};

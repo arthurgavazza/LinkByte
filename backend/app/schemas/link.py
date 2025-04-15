@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 from typing import Optional, Dict, List, Any
 from datetime import datetime
 import uuid
@@ -9,8 +9,10 @@ class LinkBase(BaseModel):
     custom_alias: Optional[str] = Field(None, description="Custom alias for the shortened URL")
     expires_at: Optional[datetime] = Field(None, description="Expiration date for the link")
     is_password_protected: bool = Field(False, description="Whether the link is password protected")
+    user_id: Optional[uuid.UUID] = Field(None, description="The user ID of the link creator")
     
-    @validator('custom_alias')
+    @field_validator('custom_alias')
+    @classmethod
     def validate_custom_alias(cls, v):
         if v is not None:
             if len(v) < 3:
@@ -26,8 +28,10 @@ class LinkCreate(LinkBase):
     password: Optional[str] = Field(None, description="Password for protected links")
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Additional metadata")
     
-    @validator('password')
-    def validate_password(cls, v, values):
+    @field_validator('password')
+    @classmethod
+    def validate_password(cls, v, info):
+        values = info.data
         if values.get('is_password_protected', False) and (v is None or len(v) < 6):
             raise ValueError('Password is required and must be at least 6 characters for protected links')
         if not values.get('is_password_protected', False):
@@ -44,7 +48,8 @@ class LinkUpdate(BaseModel):
     password: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None
     
-    @validator('custom_alias')
+    @field_validator('custom_alias')
+    @classmethod
     def validate_custom_alias(cls, v):
         if v is not None:
             if len(v) < 3:
@@ -55,8 +60,10 @@ class LinkUpdate(BaseModel):
                 raise ValueError('Custom alias can only contain alphanumeric characters, hyphens, and underscores')
         return v
     
-    @validator('password')
-    def validate_password(cls, v, values):
+    @field_validator('password')
+    @classmethod
+    def validate_password(cls, v, info):
+        values = info.data
         if values.get('is_password_protected', False) and (v is None or len(v) < 6):
             raise ValueError('Password is required and must be at least 6 characters for protected links')
         return v
@@ -71,16 +78,14 @@ class LinkResponse(LinkBase):
     created_at: datetime
     updated_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 class LinkClickResponse(BaseModel):
     """Schema for link resolution with click tracking."""
     original_url: HttpUrl
     is_password_protected: bool
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 class LinkStatsResponse(BaseModel):
     """Schema for link statistics."""
@@ -94,8 +99,7 @@ class LinkStatsResponse(BaseModel):
     top_browsers: List[Dict[str, Any]]
     top_devices: List[Dict[str, Any]]
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 class LinkList(BaseModel):
     """Schema for paginated link responses."""

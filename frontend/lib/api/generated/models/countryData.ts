@@ -10,8 +10,8 @@
  * Schema for country statistics.
  */
 export interface CountryData {
-  code: string
-  count: number
-  name: string
-  percentage: number
+  code: string;
+  count: number;
+  name: string;
+  percentage: number;
 }

@@ -56,4 +56,6 @@ const { mutate } = useCreateEntity({
 ## Common Patterns
 - Reset form after successful submission
 - Show loading state during submission
-- Implement proper error handling 
+- Implement proper error handling
+- Provide explicit UI controls to close modals after successful operations
+- For multi-step forms, clear state when modal is closed 

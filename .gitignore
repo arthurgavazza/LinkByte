@@ -11,3 +11,13 @@ frontend/env.local
 frontend/env.development.local
 frontend/env.production.local
 backend/env.local
+frontend/.storybook
+frontend/storybook-static
+frontend/.next
+*storybook.log
+backend/alembic/versions
+backend/alembic/versions/*
+gists/*
+
+# Ignore all __pycache__ directories
+__pycache__/

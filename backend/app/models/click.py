@@ -4,9 +4,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-from app.models.base import Base
+from app.models.base import Base, TimestampMixin
 
-class Click(Base):
+class Click(Base, TimestampMixin):
     """Model representing a click on a shortened link."""
     
     __tablename__ = "clicks"

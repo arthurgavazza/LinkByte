@@ -74,10 +74,14 @@ class LinkAnalyticsSummary(BaseModel):
     top_browsers: List[BrowserData]
     top_devices: List[DeviceData]
 
+    model_config = {"from_attributes": True}
+
 class UserAnalyticsSummary(BaseModel):
     """Schema for user analytics summary."""
     user_id: uuid.UUID
     total_links: int
     total_clicks: int
     top_performing_links: List[Dict[str, Any]]
-    click_growth: float 
+    click_growth: float
+    
+    model_config = {"from_attributes": True} 

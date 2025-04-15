@@ -5,15 +5,15 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { BodyLoginApiAuthLoginPostClientId } from './bodyLoginApiAuthLoginPostClientId'
-import type { BodyLoginApiAuthLoginPostClientSecret } from './bodyLoginApiAuthLoginPostClientSecret'
-import type { BodyLoginApiAuthLoginPostGrantType } from './bodyLoginApiAuthLoginPostGrantType'
+import type { BodyLoginApiAuthLoginPostClientId } from './bodyLoginApiAuthLoginPostClientId';
+import type { BodyLoginApiAuthLoginPostClientSecret } from './bodyLoginApiAuthLoginPostClientSecret';
+import type { BodyLoginApiAuthLoginPostGrantType } from './bodyLoginApiAuthLoginPostGrantType';
 
 export interface BodyLoginApiAuthLoginPost {
-  client_id?: BodyLoginApiAuthLoginPostClientId
-  client_secret?: BodyLoginApiAuthLoginPostClientSecret
-  grant_type?: BodyLoginApiAuthLoginPostGrantType
-  password: string
-  scope?: string
-  username: string
+  client_id?: BodyLoginApiAuthLoginPostClientId;
+  client_secret?: BodyLoginApiAuthLoginPostClientSecret;
+  grant_type?: BodyLoginApiAuthLoginPostGrantType;
+  password: string;
+  scope?: string;
+  username: string;
 }

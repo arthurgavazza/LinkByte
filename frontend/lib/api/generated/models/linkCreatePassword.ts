@@ -9,4 +9,4 @@
 /**
  * Password for protected links
  */
-export type LinkCreatePassword = string | null
+export type LinkCreatePassword = string | null;

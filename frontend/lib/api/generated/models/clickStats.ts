@@ -5,15 +5,15 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { ClickStatsPreviousPeriodChange } from './clickStatsPreviousPeriodChange'
-import type { ClickDataPoint } from './clickDataPoint'
+import type { ClickStatsPreviousPeriodChange } from './clickStatsPreviousPeriodChange';
+import type { ClickDataPoint } from './clickDataPoint';
 
 /**
  * Schema for click statistics.
  */
 export interface ClickStats {
-  link_id: string
-  previous_period_change?: ClickStatsPreviousPeriodChange
-  time_series: ClickDataPoint[]
-  total_clicks: number
+  link_id: string;
+  previous_period_change?: ClickStatsPreviousPeriodChange;
+  time_series: ClickDataPoint[];
+  total_clicks: number;
 }

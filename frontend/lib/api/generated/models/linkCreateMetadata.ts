@@ -5,9 +5,9 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { LinkCreateMetadataAnyOf } from './linkCreateMetadataAnyOf'
+import type { LinkCreateMetadataAnyOf } from './linkCreateMetadataAnyOf';
 
 /**
  * Additional metadata
  */
-export type LinkCreateMetadata = LinkCreateMetadataAnyOf | null
+export type LinkCreateMetadata = LinkCreateMetadataAnyOf | null;

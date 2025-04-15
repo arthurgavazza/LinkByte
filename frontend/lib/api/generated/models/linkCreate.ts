@@ -5,29 +5,32 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { LinkCreateCustomAlias } from './linkCreateCustomAlias'
-import type { LinkCreateExpiresAt } from './linkCreateExpiresAt'
-import type { LinkCreateMetadata } from './linkCreateMetadata'
-import type { LinkCreatePassword } from './linkCreatePassword'
+import type { LinkCreateCustomAlias } from './linkCreateCustomAlias';
+import type { LinkCreateExpiresAt } from './linkCreateExpiresAt';
+import type { LinkCreateMetadata } from './linkCreateMetadata';
+import type { LinkCreatePassword } from './linkCreatePassword';
+import type { LinkCreateUserId } from './linkCreateUserId';
 
 /**
  * Schema for creating a new link.
  */
 export interface LinkCreate {
   /** Custom alias for the shortened URL */
-  custom_alias?: LinkCreateCustomAlias
+  custom_alias?: LinkCreateCustomAlias;
   /** Expiration date for the link */
-  expires_at?: LinkCreateExpiresAt
+  expires_at?: LinkCreateExpiresAt;
   /** Whether the link is password protected */
-  is_password_protected?: boolean
+  is_password_protected?: boolean;
   /** Additional metadata */
-  metadata?: LinkCreateMetadata
+  metadata?: LinkCreateMetadata;
   /**
    * The original URL to be shortened
    * @minLength 1
    * @maxLength 2083
    */
-  original_url: string
+  original_url: string;
   /** Password for protected links */
-  password?: LinkCreatePassword
+  password?: LinkCreatePassword;
+  /** The user ID of the link creator */
+  user_id?: LinkCreateUserId;
 }

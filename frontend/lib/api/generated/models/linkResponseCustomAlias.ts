@@ -9,4 +9,4 @@
 /**
  * Custom alias for the shortened URL
  */
-export type LinkResponseCustomAlias = string | null
+export type LinkResponseCustomAlias = string | null;

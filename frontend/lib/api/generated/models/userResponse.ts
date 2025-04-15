@@ -10,12 +10,12 @@
  * Schema for user response data.
  */
 export interface UserResponse {
-  created_at: string
+  created_at: string;
   /** User's email address */
-  email: string
-  id: string
-  is_active: boolean
-  is_verified: boolean
+  email: string;
+  id: string;
+  is_active: boolean;
+  is_verified: boolean;
   /** Username for login */
-  username: string
+  username: string;
 }

@@ -9,4 +9,4 @@
 /**
  * Expiration date for the link
  */
-export type LinkCreateExpiresAt = string | null
+export type LinkCreateExpiresAt = string | null;

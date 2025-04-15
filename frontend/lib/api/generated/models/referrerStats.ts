@@ -5,13 +5,13 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { ReferrerData } from './referrerData'
+import type { ReferrerData } from './referrerData';
 
 /**
  * Schema for referrer statistics.
  */
 export interface ReferrerStats {
-  link_id: string
-  referrers: ReferrerData[]
-  total_referrers: number
+  link_id: string;
+  referrers: ReferrerData[];
+  total_referrers: number;
 }

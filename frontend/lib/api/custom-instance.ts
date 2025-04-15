@@ -3,9 +3,9 @@
 import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
 
 // Create custom axios instance
-console.log(process.env.NEXT_PUBLIC_API_URL)
+console.log("API URL:", process.env.NEXT_PUBLIC_API_URL)
 export const customInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+  baseURL: 'http://localhost:8000',
   withCredentials: true, // Important for cookie authentication
   headers: {
     'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ customInstance.interceptors.response.use(
       try {
         // Try to refresh the token
         await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/refresh`,
+          `http://localhost:8000/api/auth/refresh`,
           {},
           {
             withCredentials: true, // Important for cookie authentication

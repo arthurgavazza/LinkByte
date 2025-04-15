@@ -5,13 +5,13 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { CountryData } from './countryData'
+import type { CountryData } from './countryData';
 
 /**
  * Schema for geographic statistics.
  */
 export interface GeoStats {
-  countries: CountryData[]
-  link_id: string
-  total_countries: number
+  countries: CountryData[];
+  link_id: string;
+  total_countries: number;
 }

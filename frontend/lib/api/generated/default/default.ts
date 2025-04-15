@@ -5,7 +5,10 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useQuery
+} from '@tanstack/react-query'
 import type {
   InfiniteData,
   QueryClient,
@@ -14,44 +17,50 @@ import type {
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
   UseQueryOptions,
-  UseQueryResult,
+  UseQueryResult
 } from '@tanstack/react-query'
-import { customInstanceFn } from '../../custom-instance'
+import { customInstanceFn } from '../../custom-instance';
+
+
 
 /**
  * Root endpoint to check if API is running.
  * @summary Root
  */
-export const rootGet = (signal?: AbortSignal) => {
-  return customInstanceFn<unknown>({ url: `/`, method: 'GET', signal })
-}
+export const rootGet = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return customInstanceFn<unknown>(
+      {url: `/`, method: 'GET', signal
+    },
+      );
+    }
+  
 
 export const getRootGetQueryKey = () => {
-  return [`/`] as const
-}
+    return [`/`] as const;
+    }
 
-export const getRootGetInfiniteQueryOptions = <
-  TData = InfiniteData<Awaited<ReturnType<typeof rootGet>>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>
-}) => {
-  const { query: queryOptions } = options ?? {}
+    
+export const getRootGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof rootGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>, }
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getRootGetQueryKey()
+const {query: queryOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof rootGet>>> = ({ signal }) =>
-    rootGet(signal)
+  const queryKey =  queryOptions?.queryKey ?? getRootGetQueryKey();
 
-  return {
-    queryKey,
-    queryFn,
-    staleTime: 10000,
-    retry: 3,
-    ...queryOptions,
-  } as UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData> & {
-    queryKey: QueryKey
-  }
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof rootGet>>> = ({ signal }) => rootGet(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn,   staleTime: 10000, retry: 3,  ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData> & { queryKey: QueryKey }
 }
 
 export type RootGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof rootGet>>>
@@ -60,60 +69,52 @@ export type RootGetInfiniteQueryError = unknown
 /**
  * @summary Root
  */
-export const useRootGetInfinite = <
-  TData = InfiniteData<Awaited<ReturnType<typeof rootGet>>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>
-}): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+export const useRootGetInfinite = <TData = InfiniteData<Awaited<ReturnType<typeof rootGet>>>, TError = unknown>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>, }
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
   const queryOptions = getRootGetInfiniteQueryOptions(options)
 
-  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
-    queryKey: QueryKey
-  }
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
 
-  query.queryKey = queryOptions.queryKey
+  query.queryKey = queryOptions.queryKey ;
 
-  return query
+  return query;
 }
 
 /**
  * @summary Root
  */
-export const prefetchRootGetInfinite = async <
-  TData = Awaited<ReturnType<typeof rootGet>>,
-  TError = unknown,
->(
-  queryClient: QueryClient,
-  options?: {
-    query?: Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>
-  }
-): Promise<QueryClient> => {
+export const prefetchRootGetInfinite = async <TData = Awaited<ReturnType<typeof rootGet>>, TError = unknown>(
+ queryClient: QueryClient,  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>, }
+
+  ): Promise<QueryClient> => {
+
   const queryOptions = getRootGetInfiniteQueryOptions(options)
 
-  await queryClient.prefetchInfiniteQuery(queryOptions)
+  await queryClient.prefetchInfiniteQuery(queryOptions);
 
-  return queryClient
+  return queryClient;
 }
 
-export const getRootGetQueryOptions = <
-  TData = Awaited<ReturnType<typeof rootGet>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>
-}) => {
-  const { query: queryOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getRootGetQueryKey()
+export const getRootGetQueryOptions = <TData = Awaited<ReturnType<typeof rootGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>, }
+) => {
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof rootGet>>> = ({ signal }) =>
-    rootGet(signal)
+const {query: queryOptions} = options ?? {};
 
-  return { queryKey, queryFn, staleTime: 10000, retry: 3, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof rootGet>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey }
+  const queryKey =  queryOptions?.queryKey ?? getRootGetQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof rootGet>>> = ({ signal }) => rootGet(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn,   staleTime: 10000, retry: 3,  ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData> & { queryKey: QueryKey }
 }
 
 export type RootGetQueryResult = NonNullable<Awaited<ReturnType<typeof rootGet>>>
@@ -122,184 +123,163 @@ export type RootGetQueryError = unknown
 /**
  * @summary Root
  */
-export const useRootGet = <
-  TData = Awaited<ReturnType<typeof rootGet>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+export const useRootGet = <TData = Awaited<ReturnType<typeof rootGet>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
   const queryOptions = getRootGetQueryOptions(options)
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
-  query.queryKey = queryOptions.queryKey
+  query.queryKey = queryOptions.queryKey ;
 
-  return query
+  return query;
 }
 
 /**
  * @summary Root
  */
-export const prefetchRootGet = async <
-  TData = Awaited<ReturnType<typeof rootGet>>,
-  TError = unknown,
->(
-  queryClient: QueryClient,
-  options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>> }
-): Promise<QueryClient> => {
+export const prefetchRootGet = async <TData = Awaited<ReturnType<typeof rootGet>>, TError = unknown>(
+ queryClient: QueryClient,  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rootGet>>, TError, TData>>, }
+
+  ): Promise<QueryClient> => {
+
   const queryOptions = getRootGetQueryOptions(options)
 
-  await queryClient.prefetchQuery(queryOptions)
+  await queryClient.prefetchQuery(queryOptions);
 
-  return queryClient
+  return queryClient;
 }
+
 
 /**
  * Health check endpoint.
  * @summary Health Check
  */
-export const healthCheckHealthGet = (signal?: AbortSignal) => {
-  return customInstanceFn<unknown>({ url: `/health`, method: 'GET', signal })
-}
+export const healthCheckHealthGet = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return customInstanceFn<unknown>(
+      {url: `/health`, method: 'GET', signal
+    },
+      );
+    }
+  
 
 export const getHealthCheckHealthGetQueryKey = () => {
-  return [`/health`] as const
+    return [`/health`] as const;
+    }
+
+    
+export const getHealthCheckHealthGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof healthCheckHealthGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getHealthCheckHealthGetQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthCheckHealthGet>>> = ({ signal }) => healthCheckHealthGet(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn,   staleTime: 10000, retry: 3,  ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export const getHealthCheckHealthGetInfiniteQueryOptions = <
-  TData = InfiniteData<Awaited<ReturnType<typeof healthCheckHealthGet>>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<
-    UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>
-  >
-}) => {
-  const { query: queryOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getHealthCheckHealthGetQueryKey()
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof healthCheckHealthGet>>> = ({ signal }) =>
-    healthCheckHealthGet(signal)
-
-  return {
-    queryKey,
-    queryFn,
-    staleTime: 10000,
-    retry: 3,
-    ...queryOptions,
-  } as UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData> & {
-    queryKey: QueryKey
-  }
-}
-
-export type HealthCheckHealthGetInfiniteQueryResult = NonNullable<
-  Awaited<ReturnType<typeof healthCheckHealthGet>>
->
+export type HealthCheckHealthGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof healthCheckHealthGet>>>
 export type HealthCheckHealthGetInfiniteQueryError = unknown
 
 /**
  * @summary Health Check
  */
-export const useHealthCheckHealthGetInfinite = <
-  TData = InfiniteData<Awaited<ReturnType<typeof healthCheckHealthGet>>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<
-    UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>
-  >
-}): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+export const useHealthCheckHealthGetInfinite = <TData = InfiniteData<Awaited<ReturnType<typeof healthCheckHealthGet>>>, TError = unknown>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>, }
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
   const queryOptions = getHealthCheckHealthGetInfiniteQueryOptions(options)
 
-  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
-    queryKey: QueryKey
-  }
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
 
-  query.queryKey = queryOptions.queryKey
+  query.queryKey = queryOptions.queryKey ;
 
-  return query
+  return query;
 }
 
 /**
  * @summary Health Check
  */
-export const prefetchHealthCheckHealthGetInfinite = async <
-  TData = Awaited<ReturnType<typeof healthCheckHealthGet>>,
-  TError = unknown,
->(
-  queryClient: QueryClient,
-  options?: {
-    query?: Partial<
-      UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>
-    >
-  }
-): Promise<QueryClient> => {
+export const prefetchHealthCheckHealthGetInfinite = async <TData = Awaited<ReturnType<typeof healthCheckHealthGet>>, TError = unknown>(
+ queryClient: QueryClient,  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>, }
+
+  ): Promise<QueryClient> => {
+
   const queryOptions = getHealthCheckHealthGetInfiniteQueryOptions(options)
 
-  await queryClient.prefetchInfiniteQuery(queryOptions)
+  await queryClient.prefetchInfiniteQuery(queryOptions);
 
-  return queryClient
+  return queryClient;
 }
 
-export const getHealthCheckHealthGetQueryOptions = <
-  TData = Awaited<ReturnType<typeof healthCheckHealthGet>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>
-}) => {
-  const { query: queryOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getHealthCheckHealthGetQueryKey()
+export const getHealthCheckHealthGetQueryOptions = <TData = Awaited<ReturnType<typeof healthCheckHealthGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>, }
+) => {
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof healthCheckHealthGet>>> = ({ signal }) =>
-    healthCheckHealthGet(signal)
+const {query: queryOptions} = options ?? {};
 
-  return { queryKey, queryFn, staleTime: 10000, retry: 3, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof healthCheckHealthGet>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey }
+  const queryKey =  queryOptions?.queryKey ?? getHealthCheckHealthGetQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthCheckHealthGet>>> = ({ signal }) => healthCheckHealthGet(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn,   staleTime: 10000, retry: 3,  ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type HealthCheckHealthGetQueryResult = NonNullable<
-  Awaited<ReturnType<typeof healthCheckHealthGet>>
->
+export type HealthCheckHealthGetQueryResult = NonNullable<Awaited<ReturnType<typeof healthCheckHealthGet>>>
 export type HealthCheckHealthGetQueryError = unknown
 
 /**
  * @summary Health Check
  */
-export const useHealthCheckHealthGet = <
-  TData = Awaited<ReturnType<typeof healthCheckHealthGet>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+export const useHealthCheckHealthGet = <TData = Awaited<ReturnType<typeof healthCheckHealthGet>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
   const queryOptions = getHealthCheckHealthGetQueryOptions(options)
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
-  query.queryKey = queryOptions.queryKey
+  query.queryKey = queryOptions.queryKey ;
 
-  return query
+  return query;
 }
 
 /**
  * @summary Health Check
  */
-export const prefetchHealthCheckHealthGet = async <
-  TData = Awaited<ReturnType<typeof healthCheckHealthGet>>,
-  TError = unknown,
->(
-  queryClient: QueryClient,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>
-    >
-  }
-): Promise<QueryClient> => {
+export const prefetchHealthCheckHealthGet = async <TData = Awaited<ReturnType<typeof healthCheckHealthGet>>, TError = unknown>(
+ queryClient: QueryClient,  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthCheckHealthGet>>, TError, TData>>, }
+
+  ): Promise<QueryClient> => {
+
   const queryOptions = getHealthCheckHealthGetQueryOptions(options)
 
-  await queryClient.prefetchQuery(queryOptions)
+  await queryClient.prefetchQuery(queryOptions);
 
-  return queryClient
+  return queryClient;
 }
+
+

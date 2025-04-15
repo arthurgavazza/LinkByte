@@ -11,12 +11,12 @@
  */
 export interface UserCreate {
   /** User's email address */
-  email: string
+  email: string;
   /**
    * User's password
    * @minLength 8
    */
-  password: string
+  password: string;
   /** Username for login */
-  username: string
+  username: string;
 }

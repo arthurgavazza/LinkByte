@@ -85,10 +85,10 @@ async def duplicate_resource_exception_handler(request: Request, exc: DuplicateR
         content={"detail": exc.message},
     )
 
-# Include routers
+# Include routers with tags
 app.include_router(links.router, prefix="/api/links", tags=["links"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
-app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(auth.router, prefix="/api/auth", tags=["auth", "authentication"])
 
 @app.get("/")
 async def root():

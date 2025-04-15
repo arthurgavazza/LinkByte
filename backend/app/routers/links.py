@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request, Body, Qu
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
-from datetime import datetime, timedelta
+from datetime import datetime
 import uuid
 
 from app.db import get_db
@@ -11,9 +11,7 @@ from app.services.link_service import LinkService
 from app.services.analytics_service import AnalyticsService
 from app.middlewares.auth import require_auth
 
-router = APIRouter(
-    tags=["links"],
-)
+router = APIRouter()
 
 # Define password verification payload
 class PasswordVerifyRequest(BaseModel):

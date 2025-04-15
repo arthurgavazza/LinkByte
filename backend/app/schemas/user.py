@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, validator
+from pydantic import BaseModel, Field, EmailStr, field_validator
 from typing import Optional
 import uuid
 import re
@@ -8,7 +8,8 @@ class UserBase(BaseModel):
     email: EmailStr = Field(..., description="User's email address")
     username: str = Field(..., description="Username for login")
     
-    @validator('username')
+    @field_validator('username')
+    @classmethod
     def validate_username(cls, v):
         if len(v) < 3:
             raise ValueError('Username must be at least 3 characters long')
@@ -22,7 +23,8 @@ class UserCreate(UserBase):
     """Schema for creating a new user."""
     password: str = Field(..., min_length=8, description="User's password")
     
-    @validator('password')
+    @field_validator('password')
+    @classmethod
     def validate_password(cls, v):
         if len(v) < 8:
             raise ValueError('Password must be at least 8 characters long')
@@ -40,7 +42,8 @@ class UserUpdate(BaseModel):
     username: Optional[str] = None
     password: Optional[str] = None
     
-    @validator('username')
+    @field_validator('username')
+    @classmethod
     def validate_username(cls, v):
         if v is not None:
             if len(v) < 3:
@@ -51,7 +54,8 @@ class UserUpdate(BaseModel):
                 raise ValueError('Username can only contain alphanumeric characters, hyphens, and underscores')
         return v
     
-    @validator('password')
+    @field_validator('password')
+    @classmethod
     def validate_password(cls, v):
         if v is not None:
             if len(v) < 8:
@@ -71,8 +75,7 @@ class UserResponse(UserBase):
     is_verified: bool
     created_at: str
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 class Token(BaseModel):
     """Schema for authentication tokens."""

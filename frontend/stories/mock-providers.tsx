@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, ReactNode } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Define the Auth context type to match the real one
 interface AuthContextType {
@@ -76,4 +77,54 @@ export function useAuth() {
   }
   
   return context
+}
+
+// Create a simple QueryClient provider for Storybook
+interface StoryQueryProviderProps {
+  children: ReactNode
+}
+
+export function StoryQueryProvider({ children }: StoryQueryProviderProps) {
+  // Create a new QueryClient for each story
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnWindowFocus: false,
+      },
+    },
+  })
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
+  )
+}
+
+// Combined provider for both Auth and Query
+interface StoryProvidersProps {
+  children: ReactNode
+  user?: any
+  isAuthenticated?: boolean
+  isLoading?: boolean
+}
+
+export function StoryProviders({
+  children,
+  user = null,
+  isAuthenticated = false,
+  isLoading = false,
+}: StoryProvidersProps) {
+  return (
+    <StoryQueryProvider>
+      <StoryAuthProvider
+        user={user}
+        isAuthenticated={isAuthenticated}
+        isLoading={isLoading}
+      >
+        {children}
+      </StoryAuthProvider>
+    </StoryQueryProvider>
+  )
 } 

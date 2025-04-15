@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { BarChart3, Link2, Plus, Search, Tag } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -9,16 +9,23 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LinkTable } from '@/components/link-table'
 import { LinkStats } from '@/components/link-stats'
+import { CreateLinkModal } from '@/components/create-link-modal'
 
 export function DashboardContent() {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <div className="flex items-center gap-2">
-          <Button>
+          <Button onClick={() => setIsCreateModalOpen(true)}>
             <Plus className="mr-2 h-4 w-4" /> Create Link
           </Button>
+          <CreateLinkModal isOpen={isCreateModalOpen} onClose={() => {
+            console.log("Modal close requested");
+            setIsCreateModalOpen(false);
+          }} />
         </div>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

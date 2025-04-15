@@ -10,7 +10,7 @@
  * Schema for referrer statistics.
  */
 export interface ReferrerData {
-  count: number
-  percentage: number
-  source: string
+  count: number;
+  percentage: number;
+  source: string;
 }

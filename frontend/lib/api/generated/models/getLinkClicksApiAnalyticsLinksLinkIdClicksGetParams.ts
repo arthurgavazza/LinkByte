@@ -7,7 +7,7 @@
  */
 
 export type GetLinkClicksApiAnalyticsLinksLinkIdClicksGetParams = {
-  start_date?: string | null
-  end_date?: string | null
-  interval?: string
-}
+start_date?: string | null;
+end_date?: string | null;
+interval?: string;
+};

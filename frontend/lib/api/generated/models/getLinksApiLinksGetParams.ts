@@ -7,7 +7,7 @@
  */
 
 export type GetLinksApiLinksGetParams = {
-  skip?: number
-  limit?: number
-  user_id?: string | null
-}
+skip?: number;
+limit?: number;
+user_id?: string | null;
+};

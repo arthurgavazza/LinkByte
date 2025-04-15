@@ -21,8 +21,6 @@ class Link(BaseModel, TimestampMixin):
     is_password_protected = Column(Boolean, default=False)
     password_hash = Column(String(255), nullable=True)
     link_metadata = Column(JSONB, default={})
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relationships
     user = relationship("User", back_populates="links")

@@ -5,31 +5,31 @@
  * API for the LinkByte URL shortener
  * OpenAPI spec version: 0.1.0
  */
-import type { LinkResponseCustomAlias } from './linkResponseCustomAlias'
-import type { LinkResponseExpiresAt } from './linkResponseExpiresAt'
-import type { LinkResponseUserId } from './linkResponseUserId'
+import type { LinkResponseCustomAlias } from './linkResponseCustomAlias';
+import type { LinkResponseExpiresAt } from './linkResponseExpiresAt';
+import type { LinkResponseUserId } from './linkResponseUserId';
 
 /**
  * Schema for link response data.
  */
 export interface LinkResponse {
-  click_count?: number
-  created_at: string
+  click_count?: number;
+  created_at: string;
   /** Custom alias for the shortened URL */
-  custom_alias?: LinkResponseCustomAlias
+  custom_alias?: LinkResponseCustomAlias;
   /** Expiration date for the link */
-  expires_at?: LinkResponseExpiresAt
-  id: string
-  is_active: boolean
+  expires_at?: LinkResponseExpiresAt;
+  id: string;
+  is_active: boolean;
   /** Whether the link is password protected */
-  is_password_protected?: boolean
+  is_password_protected?: boolean;
   /**
    * The original URL to be shortened
    * @minLength 1
    * @maxLength 2083
    */
-  original_url: string
-  short_code: string
-  updated_at: string
-  user_id?: LinkResponseUserId
+  original_url: string;
+  short_code: string;
+  updated_at: string;
+  user_id?: LinkResponseUserId;
 }

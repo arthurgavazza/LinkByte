@@ -10,6 +10,7 @@ alwaysApply: true
 - Include created_at and updated_at timestamps
 - Use proper data types (UUID for IDs when appropriate)
 - Add appropriate indexes for common queries
+- Ensure timestamps have server_default values to prevent NULL violations
 
 ```python
 class Link(Base):
@@ -18,8 +19,8 @@ class Link(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     short_code = Column(String(20), unique=True, index=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 ```
 
 ## Query Optimization

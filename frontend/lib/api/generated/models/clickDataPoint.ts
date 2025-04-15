@@ -10,6 +10,6 @@
  * Schema for a single click data point.
  */
 export interface ClickDataPoint {
-  count: number
-  date: string
+  count: number;
+  date: string;
 }
