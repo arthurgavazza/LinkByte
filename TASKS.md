@@ -61,6 +61,30 @@ LinkByte is a URL shortener application with advanced features including analyti
 
 ## Next Tasks (Priority Order)
 
+### Dashboard Links Table Implementation
+- [ ] Create enhanced LinkTable component for the "Your Links" dashboard
+  - [ ] Extend existing link-table.tsx component with Shadcn UI
+  - [ ] Connect to API using React Query hooks (useGetUserLinksApiLinksMyLinksGet)
+  - [ ] Implement loading, error, and empty states with appropriate UI
+  - [ ] Add skeleton loaders for improved loading experience
+- [ ] Implement table filtering functionality
+  - [ ] Create filter controls above the table
+  - [ ] Support filtering by status (active, expired, protected)
+  - [ ] Add search functionality for URLs and tags
+- [ ] Add sorting and pagination
+  - [ ] Implement column sorting with indicators
+  - [ ] Create pagination controls with page size selection
+  - [ ] Maintain sort and pagination state
+- [ ] Implement link actions
+  - [ ] Add copy short URL action with clipboard API
+  - [ ] Create delete functionality with confirmation dialog
+  - [ ] Implement navigation to analytics page
+  - [ ] Add edit functionality that opens edit form/modal
+- [ ] Enhance user experience
+  - [ ] Add bulk actions with checkbox selection
+  - [ ] Optimize mobile view with responsive design
+  - [ ] Ensure proper accessibility
+
 ### Backend - Analytics Implementation (HIGHEST PRIORITY)
 - [ ] Complete the AnalyticsService implementation
 - [ ] Add methods to update click_count on links
@@ -304,3 +328,8 @@ The implementation will focus on building a full-stack URL shortener with robust
    - Load test redirection system
    - Optimize performance bottlenecks
    - Implement final security measures 
+
+## Dashboard Links Table Implementation Plan
+
+The dashboard links table will display a user's shortened links with comprehensive information and actions. 
+See detailed implementation plan in [DASHBOARD_LINKS_TABLE.md](./DASHBOARD_LINKS_TABLE.md). 

@@ -98,9 +98,11 @@ class ClickService:
         browser = "unknown"
         os = "unknown"
         
+        user_agent_lower = user_agent.lower()
+        
         # Simple device detection
-        if any(mobile in user_agent.lower() for mobile in ["mobi", "android", "iphone", "ipod", "ipad", "webos"]):
-            if "ipad" in user_agent.lower():
+        if any(mobile in user_agent_lower for mobile in ["mobi", "android", "iphone", "ipod", "ipad", "webos"]):
+            if "ipad" in user_agent_lower:
                 device_type = "tablet"
             else:
                 device_type = "mobile"
@@ -118,21 +120,21 @@ class ClickService:
         }
         
         for browser_name, pattern in browsers.items():
-            if re.search(pattern, user_agent.lower()):
+            if re.search(pattern, user_agent_lower):
                 browser = browser_name
                 break
         
-        # Simple OS detection
-        if "windows" in user_agent.lower():
-            os = "windows"
-        elif "mac os" in user_agent.lower():
-            os = "macos"
-        elif "linux" in user_agent.lower():
-            os = "linux"
-        elif "android" in user_agent.lower():
+        # Simple OS detection - Check mobile OS first
+        if "android" in user_agent_lower:
             os = "android"
-        elif "ios" in user_agent.lower() or "iphone" in user_agent.lower() or "ipad" in user_agent.lower():
+        elif "iphone" in user_agent_lower or "ipad" in user_agent_lower or "ipod" in user_agent_lower:
             os = "ios"
+        elif "windows" in user_agent_lower:
+            os = "windows"
+        elif "mac os" in user_agent_lower:
+            os = "macos"
+        elif "linux" in user_agent_lower:
+            os = "linux"
         
         return device_type, browser, os
     

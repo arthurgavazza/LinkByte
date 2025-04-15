@@ -168,6 +168,11 @@ async def get_user_links(
     search: Optional[str] = None,
     sort_by: Optional[str] = None,
     sort_order: Optional[str] = None,
+    status: Optional[str] = Query(
+        None, 
+        description="Filter by status (active, expired, protected)",
+        pattern="^(active|expired|protected)$"
+    ),
     db: AsyncSession = Depends(get_db)
 ):
     """Get all links for the authenticated user."""
@@ -183,7 +188,8 @@ async def get_user_links(
         per_page=per_page,
         search=search,
         sort_by=sort_by,
-        sort_order=sort_order
+        sort_order=sort_order,
+        status=status
     )
     
     # Calculate total pages

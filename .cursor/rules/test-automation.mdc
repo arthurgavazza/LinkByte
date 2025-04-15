@@ -27,3 +27,17 @@ Say "Rule test-automation loaded!" if this rule is being applied.
 - Test API endpoints with client fixtures
 - Isolate database tests with transaction rollbacks
 - Mock external services and API calls
+
+## Command Patterns
+- Run `pytest` after every significant backend change
+- Execute `npm run test` after frontend component updates
+- Generate coverage reports weekly to monitor improvements
+- Include test commands in pull request comments
+- Always verify a failing test is fixed with `pytest path/to/test`
+
+## Test Execution Guidelines
+- Run tests before committing any code
+- Fix all failing tests before marking work as complete
+- Add new tests when implementing new features
+- Update existing tests when modifying functionality
+- Never ignore test failures

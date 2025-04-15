@@ -168,4 +168,131 @@ async def test_delete_link(link_service, mock_db):
     # Assertions
     assert result is True
     assert mock_link.is_active is False
-    assert mock_db.flush.called 
+    assert mock_db.flush.called
+
+@pytest.mark.asyncio
+async def test_get_links_by_user(link_service, mock_db):
+    """Test getting links for a user with pagination, search, sorting, and status filtering."""
+    # Create mock user ID
+    user_id = uuid.uuid4()
+    
+    # Create mock links
+    mock_links = [
+        Link(id=uuid.uuid4(), short_code="link1", original_url="https://example.com/1", 
+             user_id=user_id, is_active=True, expires_at=None, is_password_protected=False),
+        Link(id=uuid.uuid4(), short_code="link2", original_url="https://example.com/2", 
+             user_id=user_id, is_active=True, expires_at=datetime.utcnow() + timedelta(days=7), 
+             is_password_protected=False),
+        Link(id=uuid.uuid4(), short_code="link3", original_url="https://example.com/3", 
+             user_id=user_id, is_active=False, expires_at=None, is_password_protected=False),
+        Link(id=uuid.uuid4(), short_code="link4", original_url="https://example.com/4", 
+             user_id=user_id, is_active=True, expires_at=datetime.utcnow() - timedelta(days=1), 
+             is_password_protected=False),
+        Link(id=uuid.uuid4(), short_code="link5", original_url="https://example.com/5", 
+             user_id=user_id, is_active=True, expires_at=None, is_password_protected=True),
+    ]
+    
+    # Set up mock for execute that returns both links and count
+    mock_result_links = MagicMock()
+    mock_result_links.scalars.return_value.all.return_value = mock_links[:2]  # Return only first 2 links
+    
+    mock_result_count = MagicMock()
+    mock_result_count.scalar.return_value = 5  # Total count
+    
+    # Mock execute to return different results based on the query
+    mock_db.execute.side_effect = [mock_result_count, mock_result_links]
+    
+    # Call the method with pagination
+    links, total = await link_service.get_links_by_user(
+        user_id=user_id,
+        page=1,
+        per_page=2,
+        sort_by="created_at",
+        sort_order="desc"
+    )
+    
+    # Assertions
+    assert links is not None
+    assert len(links) == 2
+    assert total == 5
+    
+    # Reset mock
+    mock_db.execute.reset_mock()
+    
+    # Setup mocks for status filtering
+    mock_active_links = [mock_links[0], mock_links[1], mock_links[4]]  # active links
+    mock_result_active = MagicMock()
+    mock_result_active.scalars.return_value.all.return_value = mock_active_links
+    
+    mock_result_active_count = MagicMock()
+    mock_result_active_count.scalar.return_value = 3
+    
+    mock_db.execute.side_effect = [mock_result_active_count, mock_result_active]
+    
+    # Test filtering by status=active
+    links, total = await link_service.get_links_by_user(
+        user_id=user_id,
+        page=1,
+        per_page=10,
+        status="active"
+    )
+    
+    # Assertions for active links
+    assert links is not None
+    assert len(links) == 3
+    assert total == 3
+    assert all(link.is_active for link in links)
+    
+    # Reset mock
+    mock_db.execute.reset_mock()
+    
+    # Setup mocks for expired links
+    mock_expired_links = [mock_links[3]]  # expired links
+    mock_result_expired = MagicMock()
+    mock_result_expired.scalars.return_value.all.return_value = mock_expired_links
+    
+    mock_result_expired_count = MagicMock()
+    mock_result_expired_count.scalar.return_value = 1
+    
+    mock_db.execute.side_effect = [mock_result_expired_count, mock_result_expired]
+    
+    # Test filtering by status=expired
+    links, total = await link_service.get_links_by_user(
+        user_id=user_id,
+        page=1,
+        per_page=10,
+        status="expired"
+    )
+    
+    # Assertions for expired links
+    assert links is not None
+    assert len(links) == 1
+    assert total == 1
+    assert all(link.expires_at and link.expires_at < datetime.utcnow() for link in links)
+    
+    # Reset mock
+    mock_db.execute.reset_mock()
+    
+    # Setup mocks for protected links
+    mock_protected_links = [mock_links[4]]  # protected links
+    mock_result_protected = MagicMock()
+    mock_result_protected.scalars.return_value.all.return_value = mock_protected_links
+    
+    mock_result_protected_count = MagicMock()
+    mock_result_protected_count.scalar.return_value = 1
+    
+    mock_db.execute.side_effect = [mock_result_protected_count, mock_result_protected]
+    
+    # Test filtering by status=protected
+    links, total = await link_service.get_links_by_user(
+        user_id=user_id,
+        page=1,
+        per_page=10,
+        status="protected"
+    )
+    
+    # Assertions for protected links
+    assert links is not None
+    assert len(links) == 1
+    assert total == 1
+    assert all(link.is_password_protected for link in links) 

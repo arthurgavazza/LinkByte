@@ -155,3 +155,107 @@ class LinkService:
         """Generate a random short code."""
         alphabet = string.ascii_letters + string.digits
         return ''.join(secrets.choice(alphabet) for _ in range(length)) 
+        
+    async def get_links_by_user(
+        self,
+        user_id: uuid.UUID,
+        page: int = 1,
+        per_page: int = 10,
+        search: Optional[str] = None,
+        sort_by: Optional[str] = None,
+        sort_order: Optional[str] = None,
+        status: Optional[str] = None
+    ) -> tuple[List[Link], int]:
+        """
+        Get links for a specific user with pagination, search, sorting and status filtering.
+        
+        Args:
+            user_id: The user ID to filter by
+            page: Page number (1-indexed)
+            per_page: Number of items per page
+            search: Optional search term
+            sort_by: Column to sort by
+            sort_order: Sort direction (asc or desc)
+            status: Filter by status ('active', 'expired', 'protected')
+            
+        Returns:
+            A tuple containing (list of links, total count)
+        """
+        # Calculate offset based on page and per_page
+        offset = (page - 1) * per_page
+        
+        # Base query for counting total items
+        count_query = select(func.count()).select_from(Link).where(Link.user_id == user_id)
+        
+        # Base query for fetching items
+        query = select(Link).where(Link.user_id == user_id)
+        
+        # Apply status filtering
+        if status:
+            if status == "active":
+                # Active links: not expired and is_active=True
+                query = query.where(Link.is_active == True)
+                count_query = count_query.where(Link.is_active == True)
+                
+                # Only include non-expired links (expires_at is None or expires_at > now)
+                now = datetime.utcnow()
+                query = query.where(
+                    (Link.expires_at.is_(None)) | (Link.expires_at > now)
+                )
+                count_query = count_query.where(
+                    (Link.expires_at.is_(None)) | (Link.expires_at > now)
+                )
+                
+            elif status == "expired":
+                # Expired links: expires_at <= now
+                now = datetime.utcnow()
+                query = query.where(Link.expires_at <= now)
+                count_query = count_query.where(Link.expires_at <= now)
+                
+            elif status == "protected":
+                # Password protected links
+                query = query.where(Link.is_password_protected == True)
+                count_query = count_query.where(Link.is_password_protected == True)
+        
+        # Apply search filtering if provided
+        if search:
+            search_term = f"%{search}%"
+            query = query.where(
+                (Link.short_code.ilike(search_term)) | 
+                (Link.original_url.ilike(search_term))
+            )
+            count_query = count_query.where(
+                (Link.short_code.ilike(search_term)) | 
+                (Link.original_url.ilike(search_term))
+            )
+        
+        # Apply sorting
+        if sort_by:
+            direction = "asc" if sort_order != "desc" else "desc"
+            
+            # Get the column to sort by
+            if hasattr(Link, sort_by):
+                sort_column = getattr(Link, sort_by)
+                
+                if direction == "desc":
+                    query = query.order_by(sort_column.desc())
+                else:
+                    query = query.order_by(sort_column.asc())
+            else:
+                # Default sort by created_at if column doesn't exist
+                query = query.order_by(Link.created_at.desc())
+        else:
+            # Default sort
+            query = query.order_by(Link.created_at.desc())
+        
+        # Apply pagination
+        query = query.offset(offset).limit(per_page)
+        
+        # Execute queries
+        total_result = await self.db.execute(count_query)
+        total = total_result.scalar()
+        
+        result = await self.db.execute(query)
+        links = list(result.scalars().all())
+        
+        return links, total 

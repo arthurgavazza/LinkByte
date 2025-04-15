@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, DateTime, ForeignKey, func, Index
+from sqlalchemy import Column, String, DateTime, ForeignKey, func, Index, JSON
 from sqlalchemy.sql import expression
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
@@ -71,6 +71,12 @@ class Click(Base, TimestampMixin):
     os = Column(
         String(100),
         nullable=True
+    )
+    
+    click_metadata = Column(
+        JSON,
+        nullable=True,
+        default=dict
     )
 
     # Relationships

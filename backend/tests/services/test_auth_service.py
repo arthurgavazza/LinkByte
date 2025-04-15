@@ -215,28 +215,40 @@ async def test_get_user_by_id(db_session, user_data):
     assert user_response.email == user_data.email
     assert user_response.username == user_data.username
 
-def test_hash_and_verify_password(auth_service):
+@pytest.mark.asyncio
+async def test_hash_and_verify_password():
     """Test password hashing and verification."""
-    # Test password hashing
-    password = "Password123"
+    # Arrange
+    auth_service = AuthService(AsyncMock())
+    password = "SecurePassword123"
+    
+    # Act
     hashed = auth_service._hash_password(password)
+    is_valid = auth_service._verify_password(password, hashed)
+    is_invalid = auth_service._verify_password("WrongPassword", hashed)
     
-    # Verify the password
-    assert auth_service._verify_password(password, hashed) is True
-    assert auth_service._verify_password("WrongPassword", hashed) is False
+    # Assert
+    assert hashed != password  # Password was hashed
+    assert is_valid is True  # Correct password verified
+    assert is_invalid is False  # Wrong password rejected
 
-def test_create_token(auth_service):
+@pytest.mark.asyncio
+async def test_create_token():
     """Test JWT token creation."""
-    # Create token data
-    user_id = str(uuid.uuid4())
-    token_data = {"sub": user_id, "type": "access"}
-    expires = timedelta(minutes=30)
+    # Arrange
+    auth_service = AuthService(AsyncMock())
+    data = {"sub": "user123", "type": "access"}
+    expires_delta = timedelta(minutes=15)
     
-    # Create a token
-    token = auth_service._create_token(token_data, expires)
+    # Act
+    token = auth_service._create_token(data, expires_delta)
     
-    # Decode and verify the token
-    decoded = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
-    assert decoded["sub"] == user_id
-    assert decoded["type"] == "access"
-    assert "exp" in decoded 
+    # Assert
+    assert isinstance(token, str)
+    assert len(token.split(".")) == 3  # JWT has three parts
+    
+    # Decode token to verify contents
+    payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
+    assert payload["sub"] == "user123"
+    assert payload["type"] == "access"
+    assert "exp" in payload 

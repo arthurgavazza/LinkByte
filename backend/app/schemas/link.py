@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 from typing import Optional, Dict, List, Any
 from datetime import datetime
 import uuid
+import re
 
 class LinkBase(BaseModel):
     """Base schema for link data."""
@@ -19,7 +20,8 @@ class LinkBase(BaseModel):
                 raise ValueError('Custom alias must be at least 3 characters long')
             if len(v) > 20:
                 raise ValueError('Custom alias must be at most 20 characters long')
-            if not v.isalnum() and not all(c in v + '-_' for c in v):
+            # Stricter validation for special characters
+            if not re.match(r'^[a-zA-Z0-9_-]+$', v):
                 raise ValueError('Custom alias can only contain alphanumeric characters, hyphens, and underscores')
         return v
 
@@ -28,15 +30,14 @@ class LinkCreate(LinkBase):
     password: Optional[str] = Field(None, description="Password for protected links")
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Additional metadata")
     
-    @field_validator('password')
-    @classmethod
-    def validate_password(cls, v, info):
-        values = info.data
-        if values.get('is_password_protected', False) and (v is None or len(v) < 6):
-            raise ValueError('Password is required and must be at least 6 characters for protected links')
-        if not values.get('is_password_protected', False):
-            return None
-        return v
+    @model_validator(mode='after')
+    def validate_password_required(self):
+        if self.is_password_protected:
+            if not self.password or len(self.password) < 6:
+                raise ValueError('Password is required and must be at least 6 characters for protected links')
+        if not self.is_password_protected:
+            self.password = None
+        return self
 
 class LinkUpdate(BaseModel):
     """Schema for updating an existing link."""
@@ -56,17 +57,17 @@ class LinkUpdate(BaseModel):
                 raise ValueError('Custom alias must be at least 3 characters long')
             if len(v) > 20:
                 raise ValueError('Custom alias must be at most 20 characters long')
-            if not v.isalnum() and not all(c in v + '-_' for c in v):
+            # Stricter validation for special characters
+            if not re.match(r'^[a-zA-Z0-9_-]+$', v):
                 raise ValueError('Custom alias can only contain alphanumeric characters, hyphens, and underscores')
         return v
     
-    @field_validator('password')
-    @classmethod
-    def validate_password(cls, v, info):
-        values = info.data
-        if values.get('is_password_protected', False) and (v is None or len(v) < 6):
-            raise ValueError('Password is required and must be at least 6 characters for protected links')
-        return v
+    @model_validator(mode='after')
+    def validate_password_required(self):
+        if self.is_password_protected:
+            if self.password is not None and len(self.password) < 6:
+                raise ValueError('Password must be at least 6 characters for protected links')
+        return self
 
 class LinkResponse(LinkBase):
     """Schema for link response data."""

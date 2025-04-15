@@ -12,10 +12,6 @@ from app.config import settings
 from app.utils.exceptions import (
     AuthenticationError,
     DuplicateResourceError,
-    TokenError,
-    InvalidCredentialsError,
-    UserDisabledError,
-    UserNotFoundError
 )
 
 # Configure structured logging

@@ -1,0 +1,65 @@
+description: Test-Driven Development workflow and practices
+globs: "**/*.{test,spec}.{ts,tsx,js,jsx,py}"
+alwaysApply: true
+---
+# Test-Driven Development
+
+## Core TDD Principles
+- Write tests before implementing functionality
+- Run tests to confirm they initially fail
+- Implement minimal code to make tests pass
+- Refactor while maintaining passing tests
+- Repeat the cycle for each feature
+
+## Implementation Workflow
+- Create test files alongside implementation files
+- Test all public functions and edge cases
+- Implement using the simplest solution first
+- Refactor for performance and readability
+- Document test scenarios in comments
+
+## Testing Requirements
+- All new features require corresponding tests
+- All bug fixes should include regression tests
+- Test coverage should not decrease with new code
+- Critical paths must have 100% test coverage
+- Update tests when requirements change
+
+## Test Commands
+
+### Backend Tests
+```bash
+# Run all backend tests
+cd backend && export PYTHONPATH=$PYTHONPATH:$(pwd) && pytest
+
+# Run specific test file
+cd backend && export PYTHONPATH=$PYTHONPATH:$(pwd) && pytest tests/path/to/test_file.py -v
+
+# Run tests with specific marker
+cd backend && export PYTHONPATH=$PYTHONPATH:$(pwd) && pytest -m "unit"
+
+# Get test coverage report
+cd backend && export PYTHONPATH=$PYTHONPATH:$(pwd) && pytest --cov=app tests/
+```
+
+### Frontend Tests
+```bash
+# Run all frontend tests
+cd frontend && npm run test
+
+# Run tests in watch mode
+cd frontend && npm run test:watch
+
+# Run tests with coverage report
+cd frontend && npm run test:coverage
+
+# Run specific test file
+cd frontend && npm run test -- -t "component name"
+```
+
+## Code Review Checklist
+- Verify tests exist for all new functionality
+- Confirm tests cover edge cases and errors
+- Check that tests are meaningful, not trivial
+- Ensure test names clearly describe scenarios
+- Validate that all tests pass before merging 

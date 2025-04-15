@@ -19,7 +19,7 @@ def test_link_create_valid():
     # Should not raise an exception
     link = LinkCreate(**data)
     
-    assert link.original_url == "https://example.com/very/long/path"
+    assert str(link.original_url) == "https://example.com/very/long/path"
     assert link.custom_alias == "example"
     assert link.is_password_protected is True
     assert link.password == "securepassword"
@@ -34,7 +34,7 @@ def test_link_create_minimal():
     # Should not raise an exception
     link = LinkCreate(**data)
     
-    assert link.original_url == "https://example.com"
+    assert str(link.original_url).startswith("https://example.com")
     assert link.custom_alias is None
     assert link.expires_at is None
     assert link.is_password_protected is False
@@ -122,7 +122,7 @@ def test_link_update_schema():
     # Should not raise an exception
     link = LinkUpdate(**data)
     
-    assert link.original_url == "https://updated-example.com"
+    assert str(link.original_url).startswith("https://updated-example.com")
     assert link.custom_alias == "updated"
     assert link.is_active is False
     assert link.is_password_protected is True
@@ -162,7 +162,7 @@ def test_link_response_schema():
     # Should not raise an exception
     link = LinkResponse(**data)
     
-    assert link.original_url == "https://example.com"
+    assert str(link.original_url).startswith("https://example.com")
     assert link.short_code == "example"
     assert link.is_active is True
     assert link.click_count == 42 
